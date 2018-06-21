@@ -88,7 +88,12 @@ class RecmanJobPostApi
     public function getJobPosts(string $fields)
     {
         $queryUrlString = $this->prepareQueryUrl($fields);
-        $this->result = json_decode(file_get_contents($queryUrlString));        
+        /**
+         * NOTE: There is able to use a cURL, but `file_get_contents` function
+         * is the simplest way to do api call
+         */
+        
+        $this->result = json_decode(file_get_contents($queryUrlString));
         return $this->result;
     }
 
@@ -103,6 +108,6 @@ class RecmanJobPostApi
         $this->queryParams['key'] = $this->apiKey;
         $this->queryParams['scope'] = $this->scope;
         $this->queryParams['fields'] = $fields;
-        return self::API_URL . '?' .http_build_query($this->queryParams);
+        return self::API_URL . '?' . http_build_query($this->queryParams);
     }
 }
